@@ -18,9 +18,9 @@ namespace AuthAPI.Data
                 entity.ToTable("User");
                 entity.HasKey(e => e.UserId);
                 entity.Property(e => e.Username).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.PasswordHash).IsRequired().HasMaxLength(128);
+                entity.Property(e => e.PasswordHash).IsRequired();
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(200);
-                entity.Property(e => e.Salt).IsRequired().HasMaxLength(128);
+                entity.Property(e => e.Salt).IsRequired();
             });
 
             base.OnModelCreating(modelBuilder);

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AuthAPI.Data\AuthAPI.Data.csproj" />
     <ProjectReference Include="..\AuthAPI.Utilities\AuthAPI.Utilities.csproj" />
   </ItemGroup>

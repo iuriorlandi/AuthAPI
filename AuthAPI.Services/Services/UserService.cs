@@ -22,7 +22,7 @@ namespace AuthAPI.Services
             PasswordUtility.CreatePasswordHash(user.Password, out passwordHash, out salt);
 
             var userEntity = _userRepository.RegisterUser(new User() { Username = user.Username, Email = user.Email, PasswordHash = passwordHash, Salt = salt });
-            return ServiceResult<User>.CreateSucess(userEntity);
+            return ServiceResult<User>.CreateSuccess(userEntity);
         }
     }
 }

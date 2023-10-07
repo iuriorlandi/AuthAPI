@@ -10,7 +10,9 @@ builder.Services.AddDbContext<AuthDBContext>(options =>
 
 builder.Services
     .AddScoped<IUserRepository, UserRepository>()
-    .AddScoped<IUserService, UserService>();
+    .AddScoped<IUserService, UserService>()
+    .AddScoped<IAuthService, AuthService>()
+    .AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();

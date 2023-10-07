@@ -10,7 +10,7 @@
         private const string SUCCESS_MESSAGE = "Operation performed successfully.";
         private const string FAILURE_MESSAGE = "Operation failed.";
 
-        public static ServiceResult<T> CreateSucess(T data)
+        public static ServiceResult<T> CreateSuccess(T data)
         {
             return new ServiceResult<T>
             {
@@ -20,7 +20,7 @@
             };
         }
 
-        public static ServiceResult<T> CreateSucess()
+        public static ServiceResult<T> CreateSuccess()
         {
             return new ServiceResult<T>
             {

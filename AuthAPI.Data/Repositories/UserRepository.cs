@@ -1,4 +1,5 @@
 ﻿using AuthAPI.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthAPI.Data
 {
@@ -9,6 +10,13 @@ namespace AuthAPI.Data
         public UserRepository(AuthDBContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            return _dbContext.Users.AsNoTracking()
+                .Where(u => u.Username.Equals(username))
+                .FirstOrDefault();
         }
 
         public User RegisterUser(User user)
