@@ -16,7 +16,7 @@ namespace AuthAPI.Services
             _tokenService = tokenService;
         }
 
-        public  ServiceResult<AuthenticatedUserModel> Login(LoginModel loginModel)
+        public  ServiceResult<AuthenticatedUserModel> Login(IAuthenticableUser loginModel)
         {
             var user = _userRepository.GetUserByUsername(loginModel.Username);
             if (user == null)

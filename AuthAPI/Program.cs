@@ -8,6 +8,8 @@ var configs = builder.Configuration;
 builder.Services.AddDbContext<AuthDBContext>(options =>
     options.UseSqlServer(configs.GetConnectionString("AuthDB")));
 
+builder.Services.AddCors();
+
 builder.Services
     .AddScoped<IUserRepository, UserRepository>()
     .AddScoped<IUserService, UserService>()
@@ -19,19 +21,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My service");
-        c.RoutePrefix = string.Empty;
-    });
-}
-else
-{
-    app.MapGet("/", () => "AuthAPI");
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My service");
+    c.RoutePrefix = string.Empty;
+});
+
+
 
 app.MapControllers();
 

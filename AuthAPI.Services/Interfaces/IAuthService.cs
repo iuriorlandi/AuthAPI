@@ -4,6 +4,6 @@ namespace AuthAPI.Services
 {
     public interface IAuthService
     {
-        ServiceResult<AuthenticatedUserModel> Login (LoginModel loginModel);
+        ServiceResult<AuthenticatedUserModel> Login (IAuthenticableUser loginModel);
     }
 }

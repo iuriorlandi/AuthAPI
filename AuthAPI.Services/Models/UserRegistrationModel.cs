@@ -13,6 +13,7 @@ namespace AuthAPI.Services.Models
 
         [Required]
         [MinLength(6)]
+        [MaxLength(50)]
         public string Password { get; set; }
 
         [Required]

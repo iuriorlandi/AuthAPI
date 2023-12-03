@@ -38,5 +38,53 @@ namespace AuthAPI
                     { Message = "Sorry, an error occurred while trying to register the user." });
             }
         }
+
+        [HttpPost("alter-password")]
+        public IActionResult AlterPassword(AlterPasswordModel user)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = _userService.AlterPassword(user);
+                    if (result.Success)
+                        return Ok(result);
+                    else
+                        return BadRequest(result);
+                }
+
+                return BadRequest(ModelState);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500,
+                    new
+                    { Message = "Sorry, an error occurred while trying to register the user." });
+            }
+        }
+
+        [HttpPost("delete-user")]
+        public IActionResult DeleteUser(LoginModel user)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = _userService.DeleteUser(user);
+                    if (result.Success)
+                        return Ok(result);
+                    else
+                        return BadRequest(result);
+                }
+
+                return BadRequest(ModelState);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500,
+                    new
+                    { Message = "Sorry, an error occurred while trying to register the user." });
+            }
+        }
     }
 }
