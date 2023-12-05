@@ -6,7 +6,7 @@ namespace AuthAPI.Data
     {
         void DeleteUser(string username);
         User GetUserByUsername(string username);
-        User RegisterUser(User user);
+        void RegisterUser(User user);
         void UpdatePassword(User user);
         bool UsernameExists(string username);
     }

@@ -46,8 +46,8 @@ namespace AuthAPI.Services
         {
             var passwordModel = CreatePasswordModel (user.Password);
 
-            var userEntity = _userRepository.RegisterUser(new User() { Username = user.Username, Email = user.Email, PasswordHash = passwordModel.PasswordHash, Salt = passwordModel.Salt });
-            return ServiceResult<User>.CreateSuccess(userEntity);
+            _userRepository.RegisterUser(new User() { Username = user.Username, Email = user.Email, PasswordHash = passwordModel.PasswordHash, Salt = passwordModel.Salt });
+            return ServiceResult<User>.CreateSuccess();
         }
 
         private PasswordModel CreatePasswordModel(string password)

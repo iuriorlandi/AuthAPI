@@ -27,11 +27,10 @@ namespace AuthAPI.Data
                 .FirstOrDefault();
         }
 
-        public User RegisterUser(User user)
+        public void RegisterUser(User user)
         {
             var userAdded = _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
-            return userAdded.Entity;
         }
 
         public void UpdatePassword(User user)
