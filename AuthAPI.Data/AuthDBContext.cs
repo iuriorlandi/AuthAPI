@@ -17,10 +17,11 @@ namespace AuthAPI.Data
             {
                 entity.ToTable("User");
                 entity.HasKey(e => e.UserId);
-                entity.Property(e => e.Username).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.PasswordHash).IsRequired();
-                entity.Property(e => e.Email).IsRequired().HasMaxLength(200);
-                entity.Property(e => e.Salt).IsRequired();
+                entity.Property(e => e.UserId).HasColumnName("userid");
+                entity.Property(e => e.Username).HasColumnName("username").IsRequired().HasMaxLength(50);
+                entity.Property(e => e.PasswordHash).HasColumnName("passwordhash").IsRequired();
+                entity.Property(e => e.Email).HasColumnName("email").IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Salt).HasColumnName("salt").IsRequired();
             });
 
             base.OnModelCreating(modelBuilder);

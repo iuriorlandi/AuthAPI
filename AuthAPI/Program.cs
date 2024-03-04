@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configs = builder.Configuration;
 
 builder.Services.AddDbContext<AuthDBContext>(options =>
-    options.UseSqlServer(configs.GetConnectionString("AuthDB")));
+    options.UseNpgsql(configs.GetConnectionString("AuthDB")));
 
 builder.Services.AddCors();
 
