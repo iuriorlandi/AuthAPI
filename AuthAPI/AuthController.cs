@@ -28,7 +28,7 @@ namespace AuthAPI
 
                     return BadRequest(result);
                 }
-                
+
                 return BadRequest(ModelState);
             }
             catch (Exception)
@@ -36,6 +36,29 @@ namespace AuthAPI
                 return StatusCode(500,
                     new
                     { Message = "Sorry, an error occurred while trying to login." });
+            }
+        }
+
+        [HttpGet("validate-token")]
+        public IActionResult ValidateToken()
+        {
+            try
+            {
+                var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split("").Last();
+                if (string.IsNullOrWhiteSpace(token))
+                    return BadRequest("Token not provided");
+
+                var result = _authService.ValidateToken(token);
+
+                if (result.Success)
+                    return Ok(result);
+
+                return BadRequest(string.Join(' ', result.Errors));
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, $"Token validation failed.");
             }
         }
     }

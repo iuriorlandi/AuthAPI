@@ -16,7 +16,7 @@ namespace AuthAPI.Services
             _tokenService = tokenService;
         }
 
-        public  ServiceResult<AuthenticatedUserModel> Login(IAuthenticableUser loginModel)
+        public ServiceResult<AuthenticatedUserModel> Login(IAuthenticableUser loginModel)
         {
             var user = _userRepository.GetUserByUsername(loginModel.Username);
             if (user == null)
@@ -29,13 +29,30 @@ namespace AuthAPI.Services
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
             var token = _tokenService.GenerateToken(claims);
 
-            var authUser = new AuthenticatedUserModel {Username = user.Username, Token = token };
+            var authUser = new AuthenticatedUserModel { Username = user.Username, Token = token };
             return ServiceResult<AuthenticatedUserModel>.CreateSuccess(authUser);
+        }
+
+        public ServiceResult<UserModel> ValidateToken(string token)
+        {
+            var result = _tokenService.ValidateToken(token);
+            if (!result.Success)
+                return ServiceResult<UserModel>.CreateFailure(result.Message);
+
+            var claims = result.Data;
+            var userId = Int32.Parse(claims.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userName = claims.FindFirst(ClaimTypes.Name).Value;
+            var email = claims.FindFirst(ClaimTypes.Email).Value;
+
+            var user = new UserModel(userId, userName, email);
+
+            return ServiceResult<UserModel>.CreateSuccess(user);
         }
     }
 }

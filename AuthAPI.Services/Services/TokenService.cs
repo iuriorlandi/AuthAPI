@@ -36,5 +36,29 @@ namespace AuthAPI.Services
 
             return tokenHandler.WriteToken(securityToken);
         }
+
+        public ServiceResult<ClaimsPrincipal> ValidateToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = GetValidationParameters();
+
+            var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
+
+            return ServiceResult<ClaimsPrincipal>.CreateSuccess(principal);
+        }
+
+        private TokenValidationParameters GetValidationParameters()
+        {
+            return new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidAudience = _configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]))
+            };
+        }
     }
 }
